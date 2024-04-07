@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
+import { useCalendarStore } from '@/stores/Calendar'
 
 defineProps<{
 	msg: string;
 }>();
+
+const store = useCalendarStore()
 
 </script>
 
@@ -11,9 +14,9 @@ defineProps<{
 
 	<div class="calendar">
 		<div class="calendar__month">
-			<div class="calendar__month-prev-btn"></div>
-			<div class="calendar__month-current">April 2024</div>			
-			<div class="calendar__month-next-btn"></div>
+			<div class="calendar__month-prev-btn" @click="store.changeSelectedMonth(-1)"></div>
+			<div class="calendar__month-current">{{`${store.selectedMonthName} ${store.selectedYear}`}}</div>			
+			<div class="calendar__month-next-btn" @click="store.changeSelectedMonth(1)"></div>
 		</div>
 		<div class="calendar__week-days">
 			<div >Sun</div>
