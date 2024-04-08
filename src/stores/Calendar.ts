@@ -23,26 +23,20 @@ export const useCalendarStore = defineStore('calendar', () => {
       days.push(i)
     }
     
+    // заготовка для вставки дат следующего месяца
     // while (days.length % 7 !== 0) {
     //   days.push('')
     // }
 
     return days
   })
-
+  let selectedDate = ref(currentDate)
 
 
   function changeSelectedMonth(monthAmount: number) {
     dateInMs.value += monthAmount * dayInMs * daysInMonth.value;
-
   }
 
 
-
-  // watch(() => date.value, (newDate, oldDate) => {
-  //   console.log('вотчер сработал');
-  //   selectedMonth.value = newDate.getMonth();
-  // }, { deep: true });
-
-  return { selectedYear, selectedMonth, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
+  return { selectedYear, selectedMonth, selectedDate, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
 });

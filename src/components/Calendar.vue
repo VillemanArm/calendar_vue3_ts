@@ -11,9 +11,13 @@ const store = useCalendarStore()
 function handleDayClick(event: MouseEvent) {
 	const target = event.target as HTMLElement;
 	if (target.matches('.calendar__day') && target.innerText) {
-			console.log(target.innerText);
+			console.log(target.innerText);			
+	}
+}
 
-				
+function setSelectedDate(day: number | '') {
+	if (day) {
+		store.selectedDate = day
 	}
 }
 
@@ -42,10 +46,10 @@ function handleDayClick(event: MouseEvent) {
 				key="index" 
 				:class="{
 					'calendar__day': true, 
-					'calendar__current-day': (store.currentYear === store.selectedYear && store.currentMonth === store.selectedMonth && store.currentDate === day)
-
-
+					'calendar__current-day': (store.currentYear === store.selectedYear && store.currentMonth === store.selectedMonth && store.currentDate === day),
+					'calendar__selected-day': store.selectedDate === day,
 				}"
+				@click="setSelectedDate(day)"
 			>
 				{{ day }}
 			</div>
@@ -58,7 +62,8 @@ function handleDayClick(event: MouseEvent) {
 	@import '@/assets/styles/constants.sass'
 
 	.calendar
-		width: 245px
+		width: 261px
+		padding: 8rem
 
 		font-size: 18px
 
@@ -68,7 +73,7 @@ function handleDayClick(event: MouseEvent) {
 		display: flex
 		justify-content: space-between
 		align-items: center
-		padding: 8px
+		padding-bottom: 8px
 
 	.calendar__month-prev-btn, .calendar__month-next-btn
 		width: 0
@@ -110,9 +115,13 @@ function handleDayClick(event: MouseEvent) {
 		line-height: 100%
 
 		cursor: pointer
+		border-radius: 4px
 
 	.calendar__current-day
 		border: 1px solid $light-blue
+
+	.calendar__selected-day
+		background-color: $light-blue
 
 
 </style>
