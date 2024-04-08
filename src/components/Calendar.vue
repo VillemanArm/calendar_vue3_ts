@@ -3,23 +3,21 @@ import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
 import { useCalendarStore } from '@/stores/Calendar'
 
 defineProps<{
-	msg: string;
+	transferredDate: string;
 }>();
 
 const store = useCalendarStore()
+const emit = defineEmits(['dayClick'])
 
 function handleDayClick(event: MouseEvent) {
 	const target = event.target as HTMLElement;
 	if (target.matches('.calendar__day') && target.innerText) {
-			console.log(target.innerText);			
+			store.selectedDate = +target.innerText;	
+			emit('dayClick', `${store.selectedYear}-${store.selectedMonth}-${target.innerText}`)		
 	}
 }
 
-function setSelectedDate(day: number | '') {
-	if (day) {
-		store.selectedDate = day
-	}
-}
+
 
 </script>
 
@@ -49,7 +47,6 @@ function setSelectedDate(day: number | '') {
 					'calendar__current-day': (store.currentYear === store.selectedYear && store.currentMonth === store.selectedMonth && store.currentDate === day),
 					'calendar__selected-day': store.selectedDate === day,
 				}"
-				@click="setSelectedDate(day)"
 			>
 				{{ day }}
 			</div>

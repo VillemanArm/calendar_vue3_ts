@@ -5,7 +5,7 @@ import Calendar from './components/Calendar.vue'
 
 <template>
   <div class="app-container">
-    <Calendar msg="You did it!" />
+    <Calendar @day-click="(date) => {console.log(date)}" transferredDate="2024-04-10"/>
   </div>
 </template>
 
