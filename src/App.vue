@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Calendar from './components/Calendar.vue'
+import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
+
+
+const newDate = ref('')
+
 </script>
 
 <template>
   <div class="app-container">
-    <Calendar @day-click="(date) => {console.log(date)}" transferredDate="2024-04-10"/>
+    <input type="text" v-model="newDate">
+    <Calendar @day-click="(date) => {console.log(date)}" :transferredDate="newDate"/>
   </div>
 </template>
 

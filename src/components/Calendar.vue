@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
+import { reactive, ref, toRef, computed, onMounted, onUpdated, watch } from 'vue'
 import { useCalendarStore } from '@/stores/Calendar'
 
-defineProps<{
-	transferredDate: string;
-}>();
+const props = defineProps({
+	transferredDate: String
+});
 
 const store = useCalendarStore()
 const emit = defineEmits(['dayClick'])
@@ -13,11 +13,29 @@ function handleDayClick(event: MouseEvent) {
 	const target = event.target as HTMLElement;
 	if (target.matches('.calendar__day') && target.innerText) {
 			store.selectedDate = +target.innerText;	
-			emit('dayClick', `${store.selectedYear}-${store.selectedMonth}-${target.innerText}`)		
+			emit('dayClick', `${store.selectedYear}-${store.selectedMonth + 1}-${target.innerText}`)		
 	}
 }
 
+function setTransferredDate() {
+	const dateFormat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    if (props.transferredDate && dateFormat.test(props.transferredDate)) {
+		const newDate = new Date(props.transferredDate);
+		store.dateInMs = newDate.getTime();
+		store.selectedDate = newDate.getDate();
+	}
+}
 
+onMounted(() => {
+	setTransferredDate()
+})  
+
+
+const transferredDate = toRef(props, 'transferredDate')
+
+watch(transferredDate, () => {
+      setTransferredDate();
+    })
 
 </script>
 
@@ -41,7 +59,7 @@ function handleDayClick(event: MouseEvent) {
 		<div class="calendar__days" @click="(event: MouseEvent) => {handleDayClick(event)}">
 			<div 
 				v-for="day, index in store.displayedDays" 
-				key="index" 
+				:key="index" 
 				:class="{
 					'calendar__day': true, 
 					'calendar__current-day': (store.currentYear === store.selectedYear && store.currentMonth === store.selectedMonth && store.currentDate === day),

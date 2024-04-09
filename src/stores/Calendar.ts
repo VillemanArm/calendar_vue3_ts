@@ -12,11 +12,13 @@ export const useCalendarStore = defineStore('calendar', () => {
   let dateInMs = ref(Date.now());
   let selectedYear = computed(() => new Date(dateInMs.value).getFullYear());
   let selectedMonth = computed(() => new Date(dateInMs.value).getMonth());
+  let selectedDate = ref(new Date(dateInMs.value).getDate())
   let selectedMonthName = computed(() => months[selectedMonth.value])
   let daysInMonth = computed(() => new Date(selectedYear.value, selectedMonth.value + 1, 0).getDate())
   let displayedDays = computed(() => {
     const firstDay = new Date(selectedYear.value, selectedMonth.value, 1).getDay()
 
+    // если нужно вставить в начало календаря даты предыдущего месяца - переписать начальную генерацию массива
     const days: Array< '' | number> = Array(firstDay - 1).fill('')
 
     for (let i:number = 1; i <= daysInMonth.value; i++) {
@@ -30,13 +32,10 @@ export const useCalendarStore = defineStore('calendar', () => {
 
     return days
   })
-  let selectedDate = ref(currentDate)
-
-
+ 
   function changeSelectedMonth(monthAmount: number) {
     dateInMs.value += monthAmount * dayInMs * daysInMonth.value;
   }
 
-
-  return { selectedYear, selectedMonth, selectedDate, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
+  return { selectedYear, dateInMs, selectedMonth, selectedDate, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
 });
