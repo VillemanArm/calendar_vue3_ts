@@ -1,19 +1,29 @@
 import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
+import { useAppStore } from './App';
+import content from '@/langs/calendarLangs'
+
+type RefType<T> = {
+  value: T;
+};
 
 export const useCalendarStore = defineStore('calendar', () => {
+  const appStore = useAppStore()
+
   const dayInMs = 86400000;
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const now = new Date
   const currentDate = now.getDate()
   const currentMonth = now.getMonth()
   const currentYear = now.getFullYear()
+  
+  let months: RefType<string[]> = ref(content.months[appStore.lang])
+  let weekDays: RefType<string[]> = ref(content.weekDays[appStore.lang])
 
   let dateInMs = ref(Date.now());
   let selectedYear = computed(() => new Date(dateInMs.value).getFullYear());
   let selectedMonth = computed(() => new Date(dateInMs.value).getMonth());
   let selectedDate = ref(new Date(dateInMs.value).getDate())
-  let selectedMonthName = computed(() => months[selectedMonth.value])
+  let selectedMonthName = computed(() => months.value[selectedMonth.value])
   let daysInMonth = computed(() => new Date(selectedYear.value, selectedMonth.value + 1, 0).getDate())
   let displayedDays = computed(() => {
     const firstDay = new Date(selectedYear.value, selectedMonth.value, 1).getDay()
@@ -37,5 +47,5 @@ export const useCalendarStore = defineStore('calendar', () => {
     dateInMs.value += monthAmount * dayInMs * daysInMonth.value;
   }
 
-  return { selectedYear, dateInMs, selectedMonth, selectedDate, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
+  return { weekDays, selectedYear, dateInMs, selectedMonth, selectedDate, selectedMonthName, displayedDays, currentDate, currentMonth, currentYear, changeSelectedMonth };
 });

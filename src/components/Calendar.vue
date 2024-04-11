@@ -6,14 +6,14 @@ const props = defineProps({
 	transferredDate: String
 });
 
-const store = useCalendarStore()
+const calendar = useCalendarStore()
 const emit = defineEmits(['dayClick'])
 
 function handleDayClick(event: MouseEvent) {
 	const target = event.target as HTMLElement;
 	if (target.matches('.calendar__day') && target.innerText) {
-			store.selectedDate = +target.innerText;	
-			emit('dayClick', `${store.selectedYear}-${store.selectedMonth + 1}-${target.innerText}`)		
+			calendar.selectedDate = +target.innerText;	
+			emit('dayClick', `${calendar.selectedYear}-${('0' + (calendar.selectedMonth + 1).toString()).slice(-2)}-${('0' + target.innerText).slice(-2)}`)		
 	}
 }
 
@@ -21,8 +21,10 @@ function setTransferredDate() {
 	const dateFormat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
     if (props.transferredDate && dateFormat.test(props.transferredDate)) {
 		const newDate = new Date(props.transferredDate);
-		store.dateInMs = newDate.getTime();
-		store.selectedDate = newDate.getDate();
+		calendar.dateInMs = newDate.getTime();
+		calendar.selectedDate = newDate.getDate();
+	} else {
+		console.warn('Warning: The calendar received a date in the wrong format!');		
 	}
 }
 
@@ -43,27 +45,22 @@ watch(transferredDate, () => {
 
 	<div class="calendar">
 		<div class="calendar__month">
-			<div class="calendar__month-prev-btn" @click="store.changeSelectedMonth(-1)"></div>
-			<div class="calendar__month-current">{{`${store.selectedMonthName} ${store.selectedYear}`}}</div>			
-			<div class="calendar__month-next-btn" @click="store.changeSelectedMonth(1)"></div>
+			<div class="calendar__month-prev-btn" @click="calendar.changeSelectedMonth(-1)"></div>
+			<div class="calendar__month-current">{{`${calendar.selectedMonthName} ${calendar.selectedYear}`}}</div>			
+			<div class="calendar__month-next-btn" @click="calendar.changeSelectedMonth(1)"></div>
 		</div>
 		<div class="calendar__week-days">
-			<div >Sun</div>
-			<div >Mon</div>
-			<div >Tue</div>
-			<div >Wed</div>
-			<div >Thu</div>
-			<div >Fri</div>
-			<div >Sat</div>
+			<div v-for="day, index in calendar.weekDays" :key="index">{{day}}</div>
+
 		</div>
 		<div class="calendar__days" @click="(event: MouseEvent) => {handleDayClick(event)}">
 			<div 
-				v-for="day, index in store.displayedDays" 
+				v-for="day, index in calendar.displayedDays" 
 				:key="index" 
 				:class="{
 					'calendar__day': true, 
-					'calendar__current-day': (store.currentYear === store.selectedYear && store.currentMonth === store.selectedMonth && store.currentDate === day),
-					'calendar__selected-day': store.selectedDate === day,
+					'calendar__current-day': (calendar.currentYear === calendar.selectedYear && calendar.currentMonth === calendar.selectedMonth && calendar.currentDate === day),
+					'calendar__selected-day': calendar.selectedDate === day,
 				}"
 			>
 				{{ day }}
