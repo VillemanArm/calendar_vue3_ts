@@ -25,13 +25,21 @@ img
 
 input 
     outline: 0
-    border: none
+    border: 1px solid $primary-font-color
     background: #fff
+    padding: 2px 4px
 
 button
     outline: 0
     border: none
     cursor: pointer
+    padding: 2px 4px
+
+    background-color: $light-blue
+
+    &:hover
+        background-color: transparent
+        border: 1px solid $light-blue
 
 @media (max-width: 768px)
     html 

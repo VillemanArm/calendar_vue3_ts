@@ -1,12 +1,11 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, type Ref } from 'vue';
 import { defineStore } from 'pinia';
 
-type RefType<T> = {
-  value: T;
-};
 
 export const useAppStore = defineStore('app', () => {
-  const lang: RefType<'en' | 'ru'> = ref('ru') 
+  const lang: Ref<'en' | 'ru'> = ref('en') 
+  const transferredDate: Ref<string> = ref('') 
 
-  return { lang };
+
+  return { lang, transferredDate };
 });

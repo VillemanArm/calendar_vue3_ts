@@ -16,8 +16,8 @@ export const useCalendarStore = defineStore('calendar', () => {
   const currentMonth = now.getMonth()
   const currentYear = now.getFullYear()
   
-  let months: RefType<string[]> = ref(content.months[appStore.lang])
-  let weekDays: RefType<string[]> = ref(content.weekDays[appStore.lang])
+  let months: RefType<string[] | string> = computed(() => content.months[appStore.lang])
+  let weekDays: RefType<string[] | string> = computed(() => content.weekDays[appStore.lang])
 
   let dateInMs = ref(Date.now());
   let selectedYear = computed(() => new Date(dateInMs.value).getFullYear());

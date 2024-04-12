@@ -2,16 +2,17 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Calendar from './components/Calendar.vue'
 import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
+import CalendarSettings from '@/components/CalendarSettings.vue';
+import { useAppStore } from './stores/App';
 
-
-const newDate = ref('')
+const app = useAppStore()
 
 </script>
 
 <template>
   <div class="app-container">
-    <input type="text" v-model="newDate">
-    <Calendar @day-click="(date) => {console.log(date)}" :transferredDate="newDate"/>
+    <CalendarSettings/>
+    <Calendar @day-click="(date) => {console.log(date)}" :transferredDate="app.transferredDate"/>
   </div>
 </template>
 
@@ -23,5 +24,6 @@ const newDate = ref('')
     display: flex
     justify-content: center
     align-items: center
+    flex-direction: column
 
 </style>

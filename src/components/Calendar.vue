@@ -23,7 +23,7 @@ function setTransferredDate() {
 		const newDate = new Date(props.transferredDate);
 		calendar.dateInMs = newDate.getTime();
 		calendar.selectedDate = newDate.getDate();
-	} else {
+	} else if (props.transferredDate) {
 		console.warn('Warning: The calendar received a date in the wrong format!');		
 	}
 }
