@@ -3,10 +3,6 @@ import { defineStore } from 'pinia';
 import { useAppStore } from './App';
 import content from '@/langs/calendarLangs'
 
-type RefType<T> = {
-  value: T;
-};
-
 export const useCalendarStore = defineStore('calendar', () => {
   const appStore = useAppStore()
 
@@ -16,8 +12,8 @@ export const useCalendarStore = defineStore('calendar', () => {
   const currentMonth = now.getMonth()
   const currentYear = now.getFullYear()
   
-  let months: RefType<string[] | string> = computed(() => content.months[appStore.lang])
-  let weekDays: RefType<string[] | string> = computed(() => content.weekDays[appStore.lang])
+  let months = computed(() => content.months[appStore.lang])
+  let weekDays = computed(() => content.weekDays[appStore.lang])
 
   let dateInMs = ref(Date.now());
   let selectedYear = computed(() => new Date(dateInMs.value).getFullYear());

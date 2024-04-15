@@ -2,14 +2,28 @@
 import { reactive, ref, toRef, computed, onMounted, onUpdated, watch } from 'vue'
 import { useCalendarStore } from '@/stores/Calendar'
 import { useAppStore } from '@/stores/App'
+import lang from '@/langs/CalendarSettingsLangs'
 
 const calendar = useCalendarStore()
 const app = useAppStore()
+
+const dateInput = ref<HTMLInputElement | null>(null)
 
 function setLang(event: Event){
 	if ((event.target as HTMLInputElement).value) {
 		app.lang = (event.target as HTMLInputElement).value as 'en' | 'ru';
 	}
+}
+
+function setDate() {
+	if (dateInput.value?.value) {
+		app.transferredDate = dateInput.value.value
+	}
+}
+
+function validateInput(event: Event, regExp: RegExp) {
+	const input = event.target as HTMLInputElement
+	input.value = input.value.replace(regExp, '')
 }
 </script>
 
@@ -17,8 +31,20 @@ function setLang(event: Event){
 
 	<div class="calendar-settings">
 		<div class="calendar-settings__block">
-			<input class="calendar-settings__date-input" type="text" placeholder="yyyy-mm-dd">
-			<button class="calendar-settings__date-set" type="button">Set date</button>
+			<input 
+				class="calendar-settings__date-input" 
+				ref="dateInput"
+				type="text" 
+				:placeholder="lang.dateInputPlaceholder[app.lang]" 
+				@input="(event: Event) => {validateInput(event, /[^0-9-]/g)}"
+			>
+			<button 
+				class="calendar-settings__date-set" 
+				type="button" 
+				@click="setDate"
+			>
+				{{ lang.setDateBtn[app.lang] }}
+			</button>
 		</div>
 		<select 
 			class="calendar-settings__lang-set" 
@@ -52,8 +78,8 @@ function setLang(event: Event){
 	.calendar-settings__date-input
 		width: 100px
 
-	// .calendar-settings__lang-set
-
+	.calendar-settings__lang-set
+		cursor: pointer
 
 </style>
 
