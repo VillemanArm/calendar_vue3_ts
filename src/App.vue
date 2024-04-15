@@ -44,4 +44,14 @@ const app = useAppStore()
 
     color: $secondary-font-color
 
+  @media (max-width: 768px)
+    .app__calendar-wrap
+      flex-direction: column
+
+    .app__calendar-description
+      max-width: 380rem
+      padding: 8rem
+
+      font-size: 16px
+
 </style>
