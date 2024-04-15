@@ -10,7 +10,7 @@ const content = {
             <li>Upon initialization, the component can accept a date property in the format "year-month-day" and switch the current month and day to it. If the date is not provided, take the current day.</li>
             <li>Implement the ability to change the language (month names, days of the week).</li>
             </ol>
-            <p>The implementation uses Vue 3, TypeScript, Pinia. The implementation algorithm can be found on GitHub in the readme.md file.</p>
+            <p>The implementation uses Vue 3, TypeScript, Pinia. The implementation algorithm can be found on <a href="https://github.com/VillemanArm/calendar_vue3_ts">GitHub</a> in the readme.md file.</p>
             `,
         ru: `<h1>Техническое задание.</h1>
             <p>Необходимо разработать на VueJs (2 версии и выше) компонент-календарь.</p>
@@ -21,7 +21,7 @@ const content = {
             <li>При инициализации компонент может принимать свойство даты в формате "год-месяц-день" и переключать текущий месяц и день на нее. Если дата не передана, то берем текущий день.</li>
             <li>Реализовать возможность смены языка (название месяцев, дней недели).</li>
             </ol>
-            <p>В реализации использованы Vue 3, TypeScript, Pinia. Алгоритм реализации можно посмотреть на GitHub в файле readme.md</p>`,
+            <p>В реализации использованы Vue 3, TypeScript, Pinia. Алгоритм реализации можно посмотреть на <a href="https://github.com/VillemanArm/calendar_vue3_ts">GitHub</a> GitHub в файле readme.md</p>`,
     },
 }
 

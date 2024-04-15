@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NewComponent from '@/components/NewComponent.vue'
+// import NewComponent from '@/components/NewComponent.vue'
 </script>
 
 <template>
