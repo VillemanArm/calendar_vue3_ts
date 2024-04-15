@@ -135,7 +135,6 @@ watch(transferredDate, () => {
 	.calendar__selected-day
 		background-color: $light-blue
 
-
 </style>
 
 

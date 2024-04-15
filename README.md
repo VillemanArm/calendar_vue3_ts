@@ -1,33 +1,18 @@
-# calendar
+Тестовое задание. Внутри списка описан мой алгоритм реализации.
 
-This template should help get you started developing with Vue 3 in Vite.
+1. Нужно сделать возможность переключения месяцев, а так же выбора конкретной даты при клике.
+   1. Нарисовать компонент.
+   2. Данные будут храниться в модуле pinia, чтобы попрактиковаться с таким хранилищем
+   3. Получить текущую дату в отдельных цифрах
+   4. Сгенерировать массив для календаря на основе заданных года и месяца
+   5. Привязать отрисовку данных к макету
+   6. Сделать выделение текущей даты и выбранной даты
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+2. На клик по дню повесить событие, которое будет возвращать выбранную дату.
+3. При инициализации компонент может принимать свойство даты в формате "год-месяц-день" и переключать текущий месяц и день на нее. Если дата не передана, то берем текущий день.
+    1.  При монтаже календаря проверить переданный transferredDate. Если он соответствует шаблону - переписать dateInMs, если не соответствует - отправить в консоль ошибку
+4. Реализовать возможность смены языка (название месяцев, дней недели).
+   - Сделать хранилище для приложения и импортировать его в хранилище Calendar чтобы хранить там выбранный параметр языка
+   - Сделать файл с переводами выводимых данных и подключить его в хранилище calendar. Для файла сделать отдельную директорию.
+   - Подтянуть списки с днями недели и месяцами
+   - Сделать вывод дней недели списком.
